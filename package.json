@@ -1,0 +1,14 @@
+{
+  "name": "polyad",
+  "version": "0.1.0",
+  "author": "Terrablue <terrablue@posteo.is>",
+  "bugs": "https://github.com/terrablue/polyad/issues",
+  "repository": "https://github.com/terrablue/polyad",
+  "description": "Monads for JavaScript",
+  "license": "BSD-3-Clause",
+  "type": "module",
+  "exports": "./exports.js",
+  "dependencies": {
+    "debris": "^0.4.0"
+  }
+}

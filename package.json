@@ -9,6 +9,7 @@
   "type": "module",
   "exports": "./exports.js",
   "dependencies": {
-    "debris": "^0.4.0"
+    "debris": "^0.4.0",
+    "dyndef": "^0.1.0"
   }
 }

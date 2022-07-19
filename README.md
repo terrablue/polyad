@@ -1,7 +1,7 @@
 # Polyad: Monads for JavaScript
 
-Monads is a pattern in functional programming for encapsulating values in types
-with additional operators. This is a collection of such monads for JavaScript.
+Monads are a pattern in functional programming for encapsulating values in types
+with additional operations. This is a collection of such monads for JavaScript.
 
 ## Using
 
@@ -60,7 +60,7 @@ try {
 
 into
 
-```
+```js
 new Either(someFileOperation, showErrorToUser).map(v => v());
 ```
 

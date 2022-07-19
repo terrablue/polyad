@@ -26,7 +26,7 @@ value the promise resolves to.
 
 ```js
 const promise = Promise.resolve(" Test ");
-const te = new Eager(promise).trim().toLowerCase().slice(0, 2);
+const te = Eager.resolve(promise).trim().toLowerCase().slice(0, 2);
 console.log(await te);
 // -> te
 ```

@@ -51,14 +51,15 @@ test.case("`resolve`s like normal promise", async (assert, {Eager}) => {
   assert(await Eager.resolve(1)).equals(1);
 });
 
-test.case("works like a normal tag function", async (assert, {eager}) => {
+test.case("works like a normal tag function", async (assert, {Eager: {tag}}) => 
+{
   const name = "Mowgli";
-  assert(await eager`${name}`).equals(`${name}`);
+  assert(await tag`${name}`).equals(`${name}`);
 });
 
-test.case("works with promises", async (assert, {eager}) => {
+test.case("works with promises", async (assert, {Eager: {tag}}) => {
   const name = Promise.resolve("Mowgli");
-  assert(await eager`${name}`).equals("Mowgli");
+  assert(await tag`${name}`).equals("Mowgli");
 });
 
 export default test;

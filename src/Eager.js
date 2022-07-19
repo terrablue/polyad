@@ -37,14 +37,15 @@ export default class Eager {
   }
 
   static reject(value) {
-    return new Eager((resolve, reject) => reject(value));
+    return new Eager((_, reject) => reject(value));
+  }
+
+  static async tag(strings, ...keys) {
+    const last = -1;
+    return (await Promise.all(strings.slice(0, last).map(async (string, i) =>
+      string + await keys[i]
+    ))).join("") + strings.at(last);
   }
 }
 
-const last = -1;
-const eager = async (strings, ...keys) =>
-  (await Promise.all(strings.slice(0, last).map(async (string, i) =>
-    strings[i] + await keys[i]
-  ))).join("") + strings.at(last);
 
-export {eager};

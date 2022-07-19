@@ -28,7 +28,7 @@ value the promise resolves to.
 const promise = Promise.resolve(" Test ");
 const te = Eager.resolve(promise).trim().toLowerCase().slice(0, 2);
 console.log(await te);
-// -> te
+// -> "te"
 ```
 
 Use `then` or `catch` to exit out of the `Eager` chain.

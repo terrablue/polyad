@@ -8,13 +8,13 @@ with additional operations. This is a collection of such monads for JavaScript.
 ```js
 import {Maybe, Either} from "polyad";
 
-const maybe1 = new Maybe(1);
-console.log(maybe1.isJust(), maybe1.isNothing(), maybe1.get());
+const m1 = new Maybe(1);
+console.log(m1.isJust(), m1.isNothing(), m1.get());
 // -> true, false, 1
 
-const either = new Either(true, undefined);
-console.log(either.get(), either.map(v => !v), either.flatMap(v => !v)):
-// -> true, Maybe {}, undefined
+const e1 = new Either("failure", "success");
+console.log(e1.get(), e1.map(v => v.length), e1.flatMap(v => v.length)):
+// -> "success", Maybe {}, 7
 ```
 
 ## Monads
@@ -38,10 +38,10 @@ Use `then` or `catch` to exit out of the `Eager` chain.
 Select between two values.
 
 ```js
-const either = new Either("test", "slice");
-console.log(either.map(v => ""[v]));
+const testOrSlice = new Either("slice", "test");
+console.log(testOrSlice.map(v => ""[v]));
 // -> Maybe {}
-console.log(either.flatMap(v => ""[v]));
+console.log(testOrSlice.flatMap(v => ""[v]));
 // -> "slice"
 ```
 
@@ -50,18 +50,18 @@ console.log(either.flatMap(v => ""[v]));
 Turn
 
 ```js
-const showErrorToUser = () => console.log("there was an error!");
+const showError = () => console.log("error reading file!");
 try {
-  someFileOperation();
+  readFile();
 } catch (error) {
-  showErrorToUser();
+  showError();
 }
 ```
 
 into
 
 ```js
-new Either(someFileOperation, showErrorToUser).map(v => v());
+new Either(showError, readFile).map(v => v());
 ```
 
 ### Maybe

@@ -9,12 +9,12 @@ export default class Either {
   }
 
   get() {
-    return (this.#left.isJust() ? this.#left : this.#right).get();
+    return (this.#right.isJust() ? this.#right : this.#left).get();
   }
 
   map(mapper) {
-    const mapped = this.#left.map(mapper);
-    return mapped.isJust() ? mapped : this.#right.map(mapper);
+    const mapped = this.#right.map(mapper);
+    return mapped.isJust() ? mapped : this.#left.map(mapper);
   }
 
   flatMap(mapper) {

@@ -10,11 +10,11 @@ import {Maybe, Either} from "polyad";
 
 const m1 = new Maybe(1);
 console.log(m1.isJust(), m1.isNothing(), m1.get());
-// -> true, false, 1
+// -> true false 1
 
-const e1 = new Either("failure", "success");
-console.log(e1.get(), e1.map(v => v.length), e1.flatMap(v => v.length)):
-// -> "success", Maybe {}, 7
+const e1 = Either.right("success");
+console.log(e1, e1.get(), e1.map(v => v.length).get());
+// -> Either {} "success" 7
 ```
 
 ## Monads
@@ -38,30 +38,32 @@ Use `then` or `catch` to exit out of the `Eager` chain.
 Select between two values.
 
 ```js
-const testOrSlice = new Either("slice", "test");
-console.log(testOrSlice.map(v => ""[v]));
-// -> Maybe {}
-console.log(testOrSlice.flatMap(v => ""[v]));
-// -> "slice"
+const e2 = Either
+  .right("Hello, world")
+  .map(v => v.toUpperCase())
+  .match({right: v => v.slice(0, 5)})
+console.log(e2, e2.get());
+// -> Either {} HELLO
 ```
 
-`Either` is great for replacing `try ... catch` blocks.
+`Either.try` is great for replacing `try ... catch` blocks.
 
 Turn
 
 ```js
-const showError = () => console.log("error reading file!");
+const showError = error => console.log(error.message);
 try {
-  readFile();
+  1 / f;
 } catch (error) {
-  showError();
+  showError(error);
 }
 ```
 
 into
 
 ```js
-new Either(showError, readFile).map(v => v());
+Either.try(() => 1 / f).match({left: showError});
+// -> f is not defined
 ```
 
 ### Maybe

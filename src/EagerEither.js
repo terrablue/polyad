@@ -1,21 +1,23 @@
+import Eager from "./Eager.js";
+
 const orIdentity = fn => fn ?? (v => v);
 
-export default class Either {
+export default class EagerEither {
   #left; #right;
 
   static right(value) {
-    return new Either(undefined, value);
+    return Eager.resolve(new EagerEither(undefined, value));
   }
 
   static left(value) {
-    return new Either(value);
+    return Eager.resolve(new EagerEither(value));
   }
 
   static try(computation) {
     try {
-      return Either.right(computation());
+      return EagerEither.right(computation());
     } catch (error) {
-      return Either.left(error);
+      return EagerEither.left(error);
     }
   }
 
@@ -41,12 +43,15 @@ export default class Either {
 
   map(mapper) {
     return this.isRight()
-      ? Either.right(mapper(this.#right))
-      : Either.left(mapper(this.#left));
+      ? EagerEither.right(mapper(this.#right))
+      : EagerEither.left(mapper(this.#left));
   }
 
   flat() {
-    return this.get() instanceof Either ? this.get() : this;
+    const side = this.isRight() ? "right" : "left";
+    return EagerEither[side](this.get().then(value =>
+      value instanceof EagerEither ? this.get() : this
+    )).get();
   }
 
   flatMap(mapper) {
@@ -55,7 +60,7 @@ export default class Either {
 
   match(matcher = {}) {
     return this.isRight()
-      ? Either.right(orIdentity(matcher.right)(this.#right))
-      : Either.left(orIdentity(matcher.left)(this.#left));
+      ? EagerEither.right(orIdentity(matcher.right)(this.#right))
+      : EagerEither.left(orIdentity(matcher.left)(this.#left));
   }
 }

@@ -78,8 +78,8 @@ Use `then` or `catch` to exit out of the `Eager` chain.
 
 ### EagerEither
 
-An async Either; the same `try ... catch` replacement from before with async
-code:
+An Either wrapped inside an Eager, made for async computations; the same
+`try ... catch` replacement from before with async code:
 
 Turn
 

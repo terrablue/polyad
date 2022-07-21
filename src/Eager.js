@@ -14,8 +14,7 @@ const handler = {
       ? result
       : inconstructible_function(result[property])
         ? result[property].bind(result)
-        : result[property]
-    ));
+        : result[property]));
   },
   apply(target, that, args) {
     return Eager.resolve(target[$promise].then(result =>

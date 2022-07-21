@@ -61,10 +61,14 @@ test.case("#match", async (assert, Either) => {
 });
 
 test.case("try+match+get", async (assert, Either) => {
-  const result = await Either.try(() => 1 / e)
+  const resultSyncComputation = await Either.try(() => 1 / e)
     .match({left: ({message}) => message})
     .get();
-  assert(result).equals("e is not defined");
+  assert(resultSyncComputation).equals("e is not defined");
+  const resultAsyncComputation = await Either.try(async () => 1 / e)
+    .match({left: ({message}) => message})
+    .get();
+  assert(resultAsyncComputation).equals("e is not defined");
 });
 
 export default test;

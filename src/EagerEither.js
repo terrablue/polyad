@@ -14,11 +14,10 @@ export default class EagerEither {
   }
 
   static try(computation) {
-    try {
-      return EagerEither.right(computation());
-    } catch (error) {
-      return EagerEither.left(error);
-    }
+    return new Eager(resolve =>
+      (async () => computation())().then(
+        rightValue => resolve(EagerEither.right(rightValue)),
+        leftValue => resolve(EagerEither.left(leftValue))));
   }
 
   constructor(left, right) {

@@ -19,19 +19,15 @@ console.log(e1, e1.get(), e1.map(v => v.length).get());
 
 ## Monads
 
-### Eager
+### Maybe
 
-Wrap your value in an eager promise, allowing you to chain operations on the
-value the promise resolves to.
+Reason about empty values.
 
 ```js
-const promise = Promise.resolve(" Test ");
-const te = Eager.resolve(promise).trim().toLowerCase().slice(0, 2);
-console.log(await te);
-// -> "te"
+const maybeN = new Maybe();
+console.log(maybeN.isJust(), maybeN.isNothing(), maybeN.get());
+// -> false, true, undefined
 ```
-
-Use `then` or `catch` to exit out of the `Eager` chain.
 
 ### Either
 
@@ -66,14 +62,41 @@ Either.try(() => 1 / f).match({left: showError});
 // -> f is not defined
 ```
 
-### Maybe
+### Eager
 
-Reason about empty values.
+Wrap your value in an eager promise, allowing you to chain operations on the
+value the promise resolves to.
 
 ```js
-const maybeN = new Maybe();
-console.log(maybeN.isJust(), maybeN.isNothing(), maybeN.get());
-// -> false, true, undefined
+const promise = Promise.resolve(" Test ");
+const te = Eager.resolve(promise).trim().toLowerCase().slice(0, 2);
+console.log(await te);
+// -> "te"
+```
+
+Use `then` or `catch` to exit out of the `Eager` chain.
+
+### EagerEither
+
+An async Either; the same `try ... catch` replacement from before with async
+code:
+
+Turn
+
+```js
+const showError = error => console.log(error.message);
+try {
+  await 1 / f;
+} catch (error) {
+  showError(error);
+}
+```
+
+into
+
+```js
+await EagerEither.try(async () => await 1 / f).match({left: showError});
+// -> f is not defined
 ```
 
 ## License

@@ -46,5 +46,3 @@ export default class Eager {
     ))).join("") + strings.at(last);
   }
 }
-
-

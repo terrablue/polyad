@@ -13,8 +13,6 @@
   },
   "dependencies": {
     "debris": "^0.4.0",
-    "dyndef": "^0.1.0",
-    "eslint": "^8.20.0",
-    "eslint-plugin-json": "^3.1.0"
+    "dyndef": "^0.1.0"
   }
 }

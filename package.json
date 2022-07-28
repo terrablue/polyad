@@ -12,7 +12,10 @@
     "test": "npx debris"
   },
   "dependencies": {
-    "debris": "^0.4.0",
-    "dyndef": "^0.1.0"
+    "dyndef": "^0.2.4"
+  },
+  "devDependencies": {
+    "debris": "^0.5.0",
+    "eslint": "^8.20.0"
   }
 }

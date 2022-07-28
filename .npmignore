@@ -1,6 +1,4 @@
 test
-debris.json
-.eslintrc.json
-output
-.nyc_output
+*output
+*.json
 jsconfig.json

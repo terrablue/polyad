@@ -12,23 +12,17 @@ export default class Maybe {
     return new Maybe(value);
   }
 
+  // the `return` operator, bringing a value into the monad
   constructor(value) {
     this.#value = value;
   }
 
-  #try(callback, fallback = Nothing.value) {
-    try {
-      if (this.isJust()) {
-        return callback();
-      }
-    } catch (error) {}
-    return fallback;
-  }
-
+  // the `>>=` (`fmap` or `bind`) operator
   map(mapper) {
-    return new Maybe(this.#try(() => mapper(this.#value)));
+    return this.isNothing() ? this : new Maybe(mapper(this.#value));
   }
 
+  // join
   flatMap(mapper) {
     return this.map(mapper).get();
   }
